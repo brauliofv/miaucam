@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Permisos USB -->
+    <uses-permission android:name="android.permission.USB_PERMISSION" />
+
+    <!-- Feature para indicar que la app usa USB Host (opcional, pero recomendado para Google Play filtering) -->
+    <uses-feature android:name="android.hardware.usb.host" android:required="false" />
+
+    <!-- Permisos de captura de pantalla (implícito al usar MediaProjectionManager, no necesita declaración directa en manifest) -->
+
+    <!-- Permiso necesario para Foreground Service de tipo mediaProjection en Android 14+ -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION"/>  <!-- MOVER ESTA LÍNEA FUERA DE <application> -->
+
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MIAUCAM"
+        tools:targetApi="33"> <!--  tools:targetApi actualizado a 33 o la última versión estable -->
+
+        <!-- Servicio para captura de pantalla (Foreground Service para Android 14+) -->
+        <service
+            android:name=".ScreenCaptureService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="mediaProjection" >  <!-- Declarar el foregroundServiceType -->
+        </service>
+
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MIAUCAM">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- Intent filter para detectar cuando se conecta un dispositivo USB -->
+            <intent-filter>
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
+            </intent-filter>
+            <!--  Metadata para especificar la configuración del dispositivo USB que queremos detectar (opcional, pero recomendado) -->
+            <!--
+            <meta-data android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
+                       android:resource="@xml/device_filter" />
+            -->
+        </activity>
+    </application>
+
+</manifest>
