@@ -168,7 +168,7 @@ class ScreenCaptureService : Service() {
             .setOngoing(true) // Notificación no cancelable por el usuario (hasta que se detenga el servicio)
             .setCategory(NotificationCompat.CATEGORY_SERVICE)
 
-            .setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_BEHAVIOR_DEFAULT) // TEMPORAL: Usar DEFAULT para prueba
+            .setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_BEHAVIOR_DEFAULT) // ERROR QUE NO SE HA PODIDO RESOLVER +++ Unresolved reference: FOREGROUND_SERVICE_BEHAVIOR_DEFAULT
 
         val notification = notificationBuilder.build()
 
